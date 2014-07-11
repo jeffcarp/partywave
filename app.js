@@ -26,9 +26,22 @@ app.get('*', function (req, res) {
   });
 
   if (notFound.length) {
-    var msg = 'Module ' + notFound.join(', ') + ' was not found.\n';
-    res.status(404);
-    res.send(msg);
+
+    notFound = notFound.pop();
+
+    console.log('notFound', notFound);
+
+    var npm = require('npm');
+    npm.load(null, function(err, npm) {
+      npm.install(notFound, function() {
+        console.log('installed', arguments);
+      });
+      res.send('ok');
+    });
+
+//    var msg = 'Module ' + notFound.join(', ') + ' was not found.\n';
+//    res.status(404);
+ //   res.send(msg);
     return;
   }
 

@@ -35,6 +35,10 @@ describe('home', function() {
 
 describe('GET /.+ (libraries)', function() {
 
+  it('installs a library that it does not already have', function(done) {
+    testLibraries('camelize', done);
+  });
+
   it('returns one library', function(done) {
     testLibraries('array-map', done);
   });
@@ -43,7 +47,7 @@ describe('GET /.+ (libraries)', function() {
     testLibraries('array-map+array-reduce', done);
   });
 
-  it('returns an error if one library is not specified', function(done) {
+  it('returns an error if one library does not exist', function(done) {
 
     var query = 'array-map+array-reduce+stimpyjcat';
 
