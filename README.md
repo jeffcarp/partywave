@@ -33,6 +33,37 @@ app.controller('QuesadillaCtrl', function() {
 </script>
 ```
 
+Hey look another example
+
+```html
+<html>
+  <head>
+  </head>
+  <body>
+
+    <h1>Welcome</h1>
+
+    <div id="container"></div>
+
+    <script src="http://localhost:3000/react"></script>
+    <script>
+
+    var React = require('react');
+
+    var Tweets = React.createClass({
+      render: function() {
+        return React.DOM.div(null, 'why hello there');
+      }
+    });
+
+    var container = document.getElementById('container');
+    React.renderComponent(Tweets(), container);
+
+    </script>
+  </body>
+</html>
+```
+
 ## Run it locally
 
 ```bash
