@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "mocha": "~1.20.1",
-    "superagent": "~0.18.1"
+    "array-map": "0.0.0",
+    "array-reduce": "0.0.0"
   }
 }

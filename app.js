@@ -1,56 +1,27 @@
 var express = require('express');
-var fs = require('fs');
-var browserify = require('browserify');
+var u = require('./utils');
 var app = module.exports = express();
-
-app.set('view engine', 'ejs');
-
-app.get('/', function (req, res) {
-  res.render('index');
-});
 
 app.get('*', function (req, res) {
   res.header('Content-Type', 'application/javascript');
 
   var query = req.path.slice(1);
   var libraries = query.split('+').sort();
-  var b = browserify();
 
-  var notFound = [];
-  libraries.forEach(function(libName) {
-    try {
-      require.resolve(libName);
-    } catch(e) {
-      notFound.push(libName);
-    }
+  var unavailable = libraries.filter(function(lib) {
+    return !u.moduleInstalled(lib);
   });
 
-  if (notFound.length) {
+  if (unavailable.length) {
+    res.status(503);
+    res.send('Sorry, one or more of the libraries is not installed yet. If it is a valid npm package, they will be installed momentarily.');
 
-    notFound = notFound.pop();
-
-    console.log('notFound', notFound);
-
-    var npm = require('npm');
-    npm.load(null, function(err, npm) {
-      npm.install(notFound, function() {
-        console.log('installed', arguments);
-      });
-      res.send('ok');
-    });
-
-//    var msg = 'Module ' + notFound.join(', ') + ' was not found.\n';
-//    res.status(404);
- //   res.send(msg);
+    unavailable.forEach(u.installLibrary);
     return;
   }
 
-  libraries.forEach(function(libName) {
-    b.require(libName);
-  });
-
-  b.bundle({}, function(err, src) {
-    res.send(src);
+  u.bundle(libraries, function(bundledStr) {
+    res.send(bundledStr);
   });
 });
 

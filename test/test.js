@@ -2,13 +2,11 @@ var app = require('../app');
 var expect = require('expect.js');
 var request = require('request');
 var browserify = require('browserify');
+var fs = require('fs');
+var utils = require('../utils');
 
 var port = 3005;
 var server;
-
-var url = function(path) {
-  return 'http://localhost:' + port + path;
-};
 
 before(function(done) {
   server = app.listen(port, done);
@@ -18,75 +16,78 @@ after(function(done) {
   server.close(done);
 });
 
-describe('home', function() {
-  it('renders the home page', function(done) {
-
-    request({
-      uri: url('/'),
-      method: 'GET'
-    }, function(err, res, body) {
-      expect(res.statusCode).to.equal(200);
-      expect(body).to.contain('ConcatJS');
-      done();
-    });
-
-  });
+process.on('exit', function() {
+  // Last ditch effort if tests fail
+  try { server.close(); } catch (e) {};
 });
 
-describe('GET /.+ (libraries)', function() {
+describe('GET *', function() {
 
-  it('installs a library that it does not already have', function(done) {
-    testLibraries('camelize', done);
+  it('returns an "installing" message if you ask for a library it does not have', function(done) {
+    utils.uninstallLibrary('archy', function() {
+      fetch('archy', function(res, body) {
+
+        expect(res.statusCode).to.equal(503);
+        expect(res.headers['content-type']).to.contain('application/javascript');
+        expect(body).to.contain('not installed');
+
+        done();
+      });
+    });
   });
 
   it('returns one library', function(done) {
-    testLibraries('array-map', done);
+
+    var libraries = [
+      'array-map'
+    ];
+
+    fetch(libraries, function(res, body) {
+      expect(res.statusCode).to.equal(200);
+      expect(res.headers['content-type']).to.contain('application/javascript');
+
+      utils.bundle(libraries, function(bundledStr) {
+        expect(body).to.equal(bundledStr);
+        done();
+      });
+    });
   });
 
   it('returns two libraries', function(done) {
-    testLibraries('array-map+array-reduce', done);
-  });
 
-  it('returns an error if one library does not exist', function(done) {
+    var libraries = [
+      'array-map',
+      'array-reduce'
+    ];
 
-    var query = 'array-map+array-reduce+stimpyjcat';
-
-    request.get(url('/'+query), function(err, res, body) {
-      if (err) console.log(err);
-
-      var libraries = query.split('+').sort();
-
-      expect(res.statusCode).to.equal(404);
+    fetch(libraries, function(res, body) {
+      expect(res.statusCode).to.equal(200);
       expect(res.headers['content-type']).to.contain('application/javascript');
-      expect(body).to.contain('Module stimpyjcat was not found.');
 
-      done();
+      utils.bundle(libraries, function(bundledStr) {
+        expect(body).to.equal(bundledStr);
+        done();
+      });
     });
 
   });
 
 });
 
-var testLibraries = function(libraryStr, callback) {
-
-  request.get(url('/'+libraryStr), function(err, res, body) {
-    if (err) console.log(err);
-
-    var libraries = libraryStr.split('+').sort();
-
-    expect(res.statusCode).to.equal(200);
-    expect(res.headers['content-type']).to.contain('application/javascript');
-
-    var b = browserify();
-    libraries.forEach(function(libName) {
-      b.require(libName);
-    });
-
-    b.bundle({}, function(err, src) {
-      expect(body).to.equal(src);
-
-      callback();
-    });
-  });
-
+var url = function(path) {
+  return 'http://localhost:' + port + path;
 };
+
+var fetch = function(query, callback) {
+
+  if (query instanceof Object) {
+    query = query.join('+');
+  }
+
+  request.get(url('/'+query), function(err, res, body) {
+    if (err) console.error(err);
+
+    callback(res, body);
+  });
+};
+
