@@ -21,6 +21,22 @@ process.on('exit', function() {
   try { server.close(); } catch (e) {};
 });
 
+describe('GET /', function() {
+
+  it('returns an explanation of the service', function(done) {
+
+    request.get(url('/'), function(err, res, body) {
+      if (err) console.error(err);
+
+      expect(res.statusCode).to.equal(200);
+      expect(res.headers['content-type']).to.contain('text/html');
+      expect(body).to.contain('catjs');
+      done();
+    });
+  });
+
+});
+
 describe('GET *', function() {
 
   it('returns an "installing" message if you ask for a library it does not have', function(done) {

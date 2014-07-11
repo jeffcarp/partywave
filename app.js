@@ -2,6 +2,10 @@ var express = require('express');
 var u = require('./utils');
 var app = module.exports = express();
 
+app.get('/', function (req, res) {
+  res.send('Welcome to CatJS. Usage described here: http://catjs.jeff.is/')
+});
+
 app.get('*', function (req, res) {
   res.header('Content-Type', 'application/javascript');
 
