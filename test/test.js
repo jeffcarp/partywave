@@ -30,7 +30,7 @@ describe('GET /', function() {
 
       expect(res.statusCode).to.equal(200);
       expect(res.headers['content-type']).to.contain('text/html');
-      expect(body).to.contain('catjs');
+      expect(body).to.contain('Party Wave');
       done();
     });
   });

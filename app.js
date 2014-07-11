@@ -3,7 +3,7 @@ var u = require('./utils');
 var app = module.exports = express();
 
 app.get('/', function (req, res) {
-  res.send('Welcome to CatJS. Usage described here: http://catjs.jeff.is/ \n')
+  res.send('Welcome to the Party Wave. Usage described here: http://partywavejs.org/ \n')
 });
 
 app.get('*', function (req, res) {
