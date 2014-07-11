@@ -6,10 +6,13 @@ a.k.a Browserify-as-a-service
 
 So much time is spent during development installing and building external libraries like Angular or React. Using CatJS means you're only building your application's code, meaning dev time is faster and you don't have to worry about serving large JS files full of library code.
 
+Right now only libraries on NPM are available. The next step is to add GitHub repo names.
+
 ## TODO
 
-1. Allow version selection
-2. Get HTTPS working
+- [ ] 1. Allow version selection
+- [ ] 2. Get HTTPS working
+- [ ] Allow sources other than npm
 
 ## Usage
 
