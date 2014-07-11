@@ -6,7 +6,7 @@ a.k.a Browserify-as-a-service
 
 So much time is spent during development installing and building external libraries like Angular or React. Using Party Wave means you're only building your application's code, meaning dev time is faster and you don't have to worry about serving large JS files full of library code.
 
-Right now only libraries on NPM are available. The next step is to add GitHub repo names.
+Right now only libraries on NPM are available. The next step might be to add GitHub repo names or Bower names.
 
 ## TODO
 
