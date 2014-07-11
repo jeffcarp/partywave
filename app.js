@@ -1,7 +1,6 @@
 var express = require('express');
 var fs = require('fs');
 var browserify = require('browserify');
-var b = browserify();
 var app = module.exports = express();
 
 app.set('view engine', 'ejs');
@@ -10,6 +9,28 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
+app.get('*', function (req, res) {
+  res.header('Content-Type', 'application/javascript');
+
+  var query = req.path.slice(1);
+  var libraries = query.split('+').sort();
+  var b = browserify();
+
+  libraries.forEach(function(libName) {
+    try {
+      b.require(libName);
+    }
+    catch (e) {
+      console.log('not found ===', e);
+    }
+  });
+
+  b.bundle({}, function(err, src) {
+    res.send(src);
+  });
+});
+
+/*
 app.get('*', function (req, res) {
 
   //var query = 'react+angular';
@@ -43,7 +64,7 @@ app.get('*', function (req, res) {
   }
 
   libraries.forEach(function(libName) {
-    b.add(libName);
+    b.require(libName);
   });
 
   console.log('about to create ', filename);
@@ -56,9 +77,13 @@ app.get('*', function (req, res) {
     sendFile(req, res, filename);
     return;
   }
+
+  // TODO: Use new way of stringifying browserify output
+  // TODO: Write cache file after you send the response
 });
 
 var sendFile = function(req, res, filename) {
   var fileContents = fs.readFileSync(filename, 'utf8');
   res.send(fileContents);
 };
+*/
