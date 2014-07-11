@@ -44,5 +44,5 @@ npm start
 Run those tests
 
 ```bash
-npm start
+npm test 
 ```
