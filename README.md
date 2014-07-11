@@ -10,8 +10,9 @@ Right now only libraries on NPM are available. The next step is to add GitHub re
 
 ## TODO
 
-- [ ] 1. Allow version selection
-- [ ] 2. Get HTTPS working
+- [ ] Get caching back up and operational
+- [ ] Allow version selection
+- [ ] Get HTTPS working
 - [ ] Allow sources other than npm
 
 ## Usage
