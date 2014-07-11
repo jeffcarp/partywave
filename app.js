@@ -4,7 +4,7 @@ var fs = require('fs');
 var app = module.exports = express();
 
 app.get('/', function (req, res) {
-  res.send('Welcome to the Party Wave. Usage described here: http://partywavejs.org/ \n')
+  res.send('Welcome to the Party Wave. Usage described here: http://www.partywavejs.org/ \n')
 });
 
 app.get('*', function (req, res) {
