@@ -11,7 +11,7 @@ Right now only libraries on NPM are available. The next step might be to add Git
 ## TODO
 
 - [x] Get caching back up and operational
-- [ ] Deploy to cdn.partywavejs.org
+- [x] Deploy to cdn.partywavejs.org
 - [ ] Allow version selection
 - [ ] Get HTTPS working
 - [ ] Allow sources other than npm
@@ -46,7 +46,7 @@ Hey look another example
 
     <div id="container"></div>
 
-    <script src="http://localhost:3000/react"></script>
+    <script src="http://cdn.partywavejs.org/react"></script>
     <script>
 
     var React = require('react');
