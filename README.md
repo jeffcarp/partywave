@@ -10,7 +10,8 @@ Right now only libraries on NPM are available. The next step is to add GitHub re
 
 ## TODO
 
-- [ ] Get caching back up and operational
+- [x] Get caching back up and operational
+- [ ] Deploy to cdn.partywavejs.org
 - [ ] Allow version selection
 - [ ] Get HTTPS working
 - [ ] Allow sources other than npm
