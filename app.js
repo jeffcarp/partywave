@@ -16,13 +16,24 @@ app.get('*', function (req, res) {
   var libraries = query.split('+').sort();
   var b = browserify();
 
+  var notFound = [];
   libraries.forEach(function(libName) {
     try {
-      b.require(libName);
+      require.resolve(libName);
+    } catch(e) {
+      notFound.push(libName);
     }
-    catch (e) {
-      console.log('not found ===', e);
-    }
+  });
+
+  if (notFound.length) {
+    var msg = 'Module ' + notFound.join(', ') + ' was not found.\n';
+    res.status(404);
+    res.send(msg);
+    return;
+  }
+
+  libraries.forEach(function(libName) {
+    b.require(libName);
   });
 
   b.bundle({}, function(err, src) {

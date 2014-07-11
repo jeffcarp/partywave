@@ -43,6 +43,24 @@ describe('GET /.+ (libraries)', function() {
     testLibraries('array-map+array-reduce', done);
   });
 
+  it('returns an error if one library is not specified', function(done) {
+
+    var query = 'array-map+array-reduce+stimpyjcat';
+
+    request.get(url('/'+query), function(err, res, body) {
+      if (err) console.log(err);
+
+      var libraries = query.split('+').sort();
+
+      expect(res.statusCode).to.equal(404);
+      expect(res.headers['content-type']).to.contain('application/javascript');
+      expect(body).to.contain('Module stimpyjcat was not found.');
+
+      done();
+    });
+
+  });
+
 });
 
 var testLibraries = function(libraryStr, callback) {
