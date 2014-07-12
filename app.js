@@ -26,7 +26,7 @@ app.get('*', function (req, res) {
 
   if (unavailable.length) {
     res.status(503);
-    res.send('Sorry, one or more of the libraries is not installed yet. If it is a valid npm package, they will be installed momentarily.');
+    res.send('Sorry, one or more of those libraries are not installed yet. If it/they are valid npm packages, they will be installed momentarily.');
 
     unavailable.forEach(u.installLibrary);
     return;
