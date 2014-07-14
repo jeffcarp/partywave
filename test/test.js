@@ -29,7 +29,7 @@ describe('GET /', function() {
       if (err) console.error(err);
 
       expect(res.statusCode).to.equal(200);
-      expect(res.headers['content-type']).to.contain('text/html');
+      expect(res.headers['content-type']).to.contain('application/javascript');
       expect(body).to.contain('Party Wave');
       done();
     });
@@ -43,7 +43,7 @@ describe('GET *', function() {
     utils.uninstallLibrary('archy', function() {
       fetch('archy', function(res, body) {
 
-        expect(res.statusCode).to.equal(503);
+        expect(res.statusCode).to.equal(202);
         expect(res.headers['content-type']).to.contain('application/javascript');
         expect(body).to.contain('not installed');
 

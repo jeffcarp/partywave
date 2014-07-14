@@ -4,7 +4,8 @@ var fs = require('fs');
 var app = module.exports = express();
 
 app.get('/', function (req, res) {
-  res.send('Welcome to the Party Wave. Usage described here: http://www.partywavejs.org/ \n')
+  res.header('Content-Type', 'application/javascript');
+  res.send('console.log("Welcome to the Party Wave. Usage described here: http://www.partywavejs.org/"); \n')
 });
 
 app.get('*', function (req, res) {
@@ -25,8 +26,8 @@ app.get('*', function (req, res) {
   });
 
   if (unavailable.length) {
-    res.status(503);
-    res.send('Sorry, one or more of those libraries are not installed yet. If it/they are valid npm packages, they will be installed momentarily.');
+    res.status(202);
+    res.send('console.error("Sorry, one or more of those libraries are not installed yet. If they are valid npm packages, they will be installed momentarily. Check back in 30 seconds.");');
 
     unavailable.forEach(u.installLibrary);
     return;

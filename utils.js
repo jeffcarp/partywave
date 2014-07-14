@@ -17,7 +17,9 @@ utils.installLibrary = function(name, callback) {
 
   npm.load(null, function(err, npm) {
     npm.install(name, function() {
-      callback && callback();
+      if (typeof callback == 'function') {
+        callback();
+      }
     });
   });
 };
@@ -28,7 +30,9 @@ utils.uninstallLibrary = function(name, callback) {
   npm.load(null, function(err, npm) {
     npm.uninstall(name, function() {
       utils.removeModuleDir(name);
-      callback();
+      if (typeof callback == 'function') {
+        callback();
+      }
     });
   });
 };
