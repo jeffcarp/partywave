@@ -2,15 +2,35 @@
 <html>
   <head>
     <title>Party Wave JS</title>
+    <script>
+      var img = document.createElement('img');
+      img.src = 'surf.jpg';
+      img.onload = function() {
+        var div = document.getElementById('bg-image');
+        div.style.backgroundImage = 'url("surf.jpg")';
+        div.style.opacity = '1';
+      };
+    </script>
     <style>
       * { margin: 0; padding: 0; }
       body {
-        background-image: url('surf.jpg');
-        background-size: cover;
+        # background-image: url("http://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png");
         -webkit-font-smoothing: antialiased;
         font-family: Helvetica;
         color: white;
         background-color: #02353B;
+      }
+      #bg-image {
+        background-size: cover;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: opacity 2s ease-in-out;
+        transition: opacity 2s ease-in-out;
       }
       h1 {
         font-size: 64px;
@@ -22,8 +42,15 @@
         text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
       }
       #container {
+        position: relative;
+        z-index: 4;
         margin: 20%;
         text-align: center;
+      }
+      @media (max-width: 600px) {
+        #container {
+          margin: 5%;
+        }
       }
       #npmLogo {
         position: relative;
@@ -35,7 +62,7 @@
       }
       #example input {
         border: solid 2px rgba(0, 0, 0, 0.2);
-        width: 500px;
+        width: 100%;
         font-size: 18px;
         background-color: rgba(255, 255, 255, 0.3);
         color: white;
@@ -62,9 +89,9 @@
 
     <div id="container">
       <h1>Party Wave</h1>
-      <h2>Load all your favorite <img src="npm.png" height="20" id="npmLogo" alt="npm" /> modules in one script tag.</h2>
+      <h2>Load all your favorite <img src="npm.png" height="20" id="npmLogo" alt="npm" /><span id="npmText">npm</span> modules in one script tag.</h2>
       <div id="example">
-        <input type="text" value="http://cdn.partywavejs.org/react+jquery+lodash" />
+        <input type="text" value="http://cdn.partywavejs.org/react+jquery+lodash" id="sampleUrl" />
       </div>
       <pre class="prettyprint lang-html" id="code"
 >&lt;script src="http://cdn.partywavejs.org/<span class="str">react</span>+<span class="str">jquery</span>+<span class="str">lodash</span>"&gt;&lt;/script&gt;
@@ -75,6 +102,9 @@ var <span class="var">_</span> = require(<span class="str">'lodash'</span>);
 &lt;/script&gt;</pre>
     </div>
 
+    <div id="bg-image">
+    </div>
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -82,6 +112,14 @@ var <span class="var">_</span> = require(<span class="str">'lodash'</span>);
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-52227533-3', 'auto');
       ga('send', 'pageview');
+
+      document.getElementById('npmLogo').onload = function() {
+        document.getElementById('npmText').style.display = 'none'
+      };
+
+      window.onload = function() {
+        document.getElementById('sampleUrl').select();
+      };
     </script>
   </body>
 </html>
