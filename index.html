@@ -20,6 +20,13 @@
         color: white;
         background-color: #02353B;
       }
+      a {
+        color: #0fdaea;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #89eff7;
+      }
       #bg-image {
         background-size: cover;
         position: absolute;
@@ -39,6 +46,11 @@
       }
       h2 {
         font-size: 18px;
+        text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+        margin: 0 0 0.8em;
+      }
+      h3 {
+        font-size: 14px;
         text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
       }
       #container {
@@ -90,11 +102,9 @@
     <div id="container">
       <h1>Party Wave</h1>
       <h2>Load all your favorite <img src="npm.png" height="20" id="npmLogo" alt="npm" /><span id="npmText">npm</span> modules in one script tag.</h2>
-      <div id="example">
-        <input type="text" value="http://cdn.partywavejs.org/react+jquery+lodash" id="sampleUrl" />
-      </div>
+      <h3>Run it or fork it <a href="https://github.com/jeffcarp/partywave">on GitHub</a></h3>
       <pre class="prettyprint lang-html" id="code"
->&lt;script src="http://cdn.partywavejs.org/<span class="str">react</span>+<span class="str">jquery</span>+<span class="str">lodash</span>"&gt;&lt;/script&gt;
+>&lt;script src="http://partywave.you.com/<span class="str">react</span>+<span class="str">jquery</span>+<span class="str">lodash</span>"&gt;&lt;/script&gt;
 &lt;script&gt;
 var <span class="var">React</span> = require(<span class="str">'react'</span>);
 var <span class="var">$</span> = require(<span class="str">'jquery'</span>);
